@@ -9,8 +9,9 @@ class CustomLogoutResponse implements LogoutResponseContract
 {
     public function toResponse($request)
     {
+        $guard = $request->guard ?? 'web';
         // if admin logged in
-        if (Auth::guard('admin')->check()) {
+        if ($guard === 'admin') {
             return redirect()->route('admin.login')->with('status', 'Admin logged out!');
         }
 

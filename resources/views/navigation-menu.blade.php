@@ -115,11 +115,17 @@
 
                      <div class="border-t border-gray-200"></div>
 
+
+                     @php
+                        $guard = auth('admin')->check() ? 'admin' : null;
+                     @endphp
                      <!-- Authentication -->
-                     <form method="POST" action="{{ route('logout') }}" x-data>
+                     <form method="POST" action="{{ isset($guard) ? url($guard . '/logout') : route('logout') }}"
+                        x-data>
                         @csrf
 
-                        <x-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
+                        <x-dropdown-link href="{{ isset($guard) ? url($guard . '/logout') : route('logout') }}"
+                           @click.prevent="$root.submit();">
                            {{ __('Log Out') }}
                         </x-dropdown-link>
                      </form>
